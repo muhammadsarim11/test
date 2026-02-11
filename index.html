@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .todo-container {
+            background: white;
+            width: 400px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h2 { text-align: center; color: #333; }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #add-btn {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        ul { list-style: none; padding: 0; }
+
+        /* THE LIST ITEM LAYOUT (Flexbox) */
+        li {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between; /* Pushes text left, buttons right */
+            align-items: center;
+        }
+
+        /* Buttons Styling */
+        .btn-group { display: flex; gap: 5px; }
+
+        .edit-btn { background: #ffc107; color: black; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px;}
+        .delete-btn { background: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px;}
+
+    </style>
+</head>
+<body>
+
+<div class="todo-container">
+    <h2>My Tasks</h2>
+    <div class="input-group">
+        <input type="text" id="taskInput" placeholder="New Task...">
+        <button onclick="addTask()" id="add-btn">Add</button>
+    </div>
+    <ul id="taskList">
+        </ul>
+</div>
+
+<script>
+    function addTask() {
+        const input = document.getElementById("taskInput");
+        const list = document.getElementById("taskList");
+
+        if(input.value === "") { alert("Write something!"); return; }
+
+        // --- STEP 1: CREATE THE LAYOUT ---
+        // We need a parent <li>
+        const li = document.createElement("li");
+
+        // We need a <span> for text (So we can edit ONLY the text later)
+        const textSpan = document.createElement("span");
+        textSpan.innerText = input.value;
+
+        // We need a <div> to hold our buttons
+        const btnDiv = document.createElement("div");
+        btnDiv.className = "btn-group";
+
+        // --- STEP 2: CREATE THE BUTTONS ---
+        
+        // 1. EDIT BUTTON
+        const editBtn = document.createElement("button");
+        editBtn.innerText = "Edit";
+        editBtn.className = "edit-btn";
+        
+        // The Edit Logic (The Prompt Trick)
+        editBtn.onclick = function() {
+            // Ask user for new text
+            let newText = prompt("Update your task:", textSpan.innerText);
+            
+            // If they didn't hit cancel and didn't leave it empty
+            if (newText !== null && newText !== "") {
+                textSpan.innerText = newText;
+            }
+        };
+
+        // 2. DELETE BUTTON
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerText = "Delete";
+        deleteBtn.className = "delete-btn";
+        
+        // The Delete Logic
+        deleteBtn.onclick = function() {
+            li.remove(); // Remove the whole row
+        };
+
+        // --- STEP 3: ASSEMBLE EVERYTHING ---
+        // Put buttons inside the button div
+        btnDiv.appendChild(editBtn);
+        btnDiv.appendChild(deleteBtn);
+
+        // Put text and button div inside the <li>
+        li.appendChild(textSpan);
+        li.appendChild(btnDiv);
+
+        // Put the <li> inside the main list
+        list.appendChild(li);
+
+        // Clear input
+        input.value = "";
+    }
+</script>
+
+</body>
+</html>

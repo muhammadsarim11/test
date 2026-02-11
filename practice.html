@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    .main {
+
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+
+    input {
+
+        padding: 10px 21px;
+        margin-right: 10px;
+        margin-top: 20px;
+        border-radius: 10px;
+        border: 1px solid gray;
+        outline: none;
+
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 70px;
+    }
+
+    button {
+        padding: 10px 21px;
+        border-radius: 10px;
+        border: 1px solid gray;
+        background-color: black;
+        color: white;
+
+    }
+
+    .li-elem {
+        font-size: 20px;
+        margin: 10px;
+
+    }
+
+    .Delete-btn {
+        margin-left: 30px;
+    }
+
+
+    ul {
+
+        width: 100%;
+
+
+
+
+    }
+</style>
+
+<body>
+    <div class="main">
+        <div class="todo">
+            <h1>Todo APP</h1>
+
+            <input type="text" id="task"> <button onclick="Addtask()">Add task</button>
+
+        </div>
+
+        <ul id="list">
+
+        </ul>
+
+
+
+    </div>
+
+
+
+</body>
+
+
+<script>
+
+    function Addtask() {
+        let List = document.getElementById("list")
+        let Input = document.getElementById("task")
+
+
+        if (Input.value == "") {
+            return alert("Write something first")
+        }
+
+        let li = document.createElement("li")
+        let DeleteBtn = document.createElement("button")
+        DeleteBtn.innerText = "Delete"
+        DeleteBtn.className = "Delete-btn"
+
+        li.className = "li-elem"
+        li.innerText = Input.value
+
+
+
+        DeleteBtn.onclick = function () {
+            li.remove()
+        }
+
+
+
+        List.appendChild(li)
+        li.appendChild(DeleteBtn)
+
+
+        Input.value = ""
+    }
+
+    
+
+</script>
+
+</html>
